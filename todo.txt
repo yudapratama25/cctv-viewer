@@ -1,0 +1,148 @@
+TODO :
+- design layout
+- button untuk refresh di-tiap video player nya & refresh semua video
+- scrapp data CCTV diskominfo pakai puppeter
+- fitur favorit location dan simpan di localStorage
+- bikin About Project
+- upload ke github.io
+- bikin supaya bisa di-install di device
+
+
+
+
+
+
+const datas = [
+    {
+        location: 'Citra Niaga 1',
+        src: `https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUwdJI7RCFdZwhNEFCQ_zolLtXZhIaEMEDbHlqyk1Mg_Ay0xccvsgiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&amp;cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1N9JLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&amp;format=fmp4&amp;frames=all&amp;media=video&amp;quality=high&amp;t=live`
+    },
+    {
+        location: 'Citra Niaga 2',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU939-zTdPT86K3lCUkVnYPkhr5LwaEL6dbcXMt06oruNMos05-kIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LMddLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'DPRD Kota Samarinda',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUErOde8rwHD9D7JuW7eH2Gxh-HfkaENTBfO4YA0pUoXsquNVhuugiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DVLTjM0T7VMTjZNSdNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover AWS',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU893Ekst22LJVtQfmXQOn4ussipYaEHztZuORtUovgxE6wKy_PPwiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover Juanda',
+        src: 'https://api.santer.app/cctv/IM1YLd3E8aKDgjMSUtj7W/stream'
+    },
+    {
+        location: 'Jembatan Mahakam',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU6BN_jzOJK_CRxzW7gPohYTg-6O8aEHI8Ve3A-kXrk1-V-BDe38YiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembatan Mahkota 2 (Palaran)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU8yIIs9dSAwC1NdQ4DAo1mrCRqpAaELO4DsIvw0gSrTANaATz890iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1T9ZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembaran S.Parman (Ruhui Rahayu)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUPWjdvJ9upY23BX84dtkmpXslXCcaEA-QkLS610Elu0SxCDC5DwEiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Gunung Lingai',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUrnf9qwPO_wSCQ0GvA7XI1dqY21gaEDXbbEm_F0lNva6QPoIZtCIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LNdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Mall Lembus',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUiE6GM6abJm2xj7V5ZfjXNVeKtPkaEJ-Pk6c7_k7Ut8u063W5KTUiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNVLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Remaja',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUdjDO0uDdzXQf5Kaw-ezO5eMiwq8aEIIBynQpqUeIjS47qdoQdu4iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdJLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Citra Niaga 1',
+        src: `https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUwdJI7RCFdZwhNEFCQ_zolLtXZhIaEMEDbHlqyk1Mg_Ay0xccvsgiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&amp;cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1N9JLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&amp;format=fmp4&amp;frames=all&amp;media=video&amp;quality=high&amp;t=live`
+    },
+    {
+        location: 'Citra Niaga 2',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU939-zTdPT86K3lCUkVnYPkhr5LwaEL6dbcXMt06oruNMos05-kIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LMddLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'DPRD Kota Samarinda',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUErOde8rwHD9D7JuW7eH2Gxh-HfkaENTBfO4YA0pUoXsquNVhuugiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DVLTjM0T7VMTjZNSdNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover AWS',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU893Ekst22LJVtQfmXQOn4ussipYaEHztZuORtUovgxE6wKy_PPwiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover Juanda',
+        src: 'https://api.santer.app/cctv/IM1YLd3E8aKDgjMSUtj7W/stream'
+    },
+    {
+        location: 'Jembatan Mahakam',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU6BN_jzOJK_CRxzW7gPohYTg-6O8aEHI8Ve3A-kXrk1-V-BDe38YiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembatan Mahkota 2 (Palaran)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU8yIIs9dSAwC1NdQ4DAo1mrCRqpAaELO4DsIvw0gSrTANaATz890iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1T9ZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembaran S.Parman (Ruhui Rahayu)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUPWjdvJ9upY23BX84dtkmpXslXCcaEA-QkLS610Elu0SxCDC5DwEiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Gunung Lingai',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUrnf9qwPO_wSCQ0GvA7XI1dqY21gaEDXbbEm_F0lNva6QPoIZtCIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LNdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Mall Lembus',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUiE6GM6abJm2xj7V5ZfjXNVeKtPkaEJ-Pk6c7_k7Ut8u063W5KTUiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNVLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Remaja',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUdjDO0uDdzXQf5Kaw-ezO5eMiwq8aEIIBynQpqUeIjS47qdoQdu4iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdJLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Citra Niaga 1',
+        src: `https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUwdJI7RCFdZwhNEFCQ_zolLtXZhIaEMEDbHlqyk1Mg_Ay0xccvsgiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&amp;cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1N9JLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&amp;format=fmp4&amp;frames=all&amp;media=video&amp;quality=high&amp;t=live`
+    },
+    {
+        location: 'Citra Niaga 2',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU939-zTdPT86K3lCUkVnYPkhr5LwaEL6dbcXMt06oruNMos05-kIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LMddLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'DPRD Kota Samarinda',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUErOde8rwHD9D7JuW7eH2Gxh-HfkaENTBfO4YA0pUoXsquNVhuugiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DVLTjM0T7VMTjZNSdNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover AWS',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU893Ekst22LJVtQfmXQOn4ussipYaEHztZuORtUovgxE6wKy_PPwiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Flyover Juanda',
+        src: 'https://api.santer.app/cctv/IM1YLd3E8aKDgjMSUtj7W/stream'
+    },
+    {
+        location: 'Jembatan Mahakam',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU6BN_jzOJK_CRxzW7gPohYTg-6O8aEHI8Ve3A-kXrk1-V-BDe38YiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembatan Mahkota 2 (Palaran)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoU8yIIs9dSAwC1NdQ4DAo1mrCRqpAaELO4DsIvw0gSrTANaATz890iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M05KtEg1T9ZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Jembaran S.Parman (Ruhui Rahayu)',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUPWjdvJ9upY23BX84dtkmpXslXCcaEA-QkLS610Elu0SxCDC5DwEiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNNLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Gunung Lingai',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUrnf9qwPO_wSCQ0GvA7XI1dqY21gaEDXbbEm_F0lNva6QPoIZtCIiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M040NE9LNdZLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Mall Lembus',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUiE6GM6abJm2xj7V5ZfjXNVeKtPkaEJ-Pk6c7_k7Ut8u063W5KTUiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DOxSE00M7Y0MzM1MNVLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+    {
+        location: 'Simpang Remaja',
+        src: 'https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUdjDO0uDdzXQf5Kaw-ezO5eMiwq8aEIIBynQpqUeIjS47qdoQdu4iEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=49Ix0TMwMDAEIV0QQ9fQwMhA1wLI1DWxSE00M040tDAwSdJLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live'
+    },
+]

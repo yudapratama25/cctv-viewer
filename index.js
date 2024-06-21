@@ -6,6 +6,7 @@ const modalInfo = document.getElementById('modal-info')
 const buttonInfo = document.getElementById('button-info')
 const buttonCloseModal = document.getElementById('button-close-modal')
 const body = document.getElementsByTagName('body')[0]
+const basePath = (window.location.hostname === 'yudapratama25.github.io') ? 'https://yudapratama25.github.io/cctv-viewer/' : '/'
 
 let widthDevice = screen.width
 
@@ -78,9 +79,9 @@ const selectCctv = (indexData, cctvId) => {
         return false;
     }
 
-    if (selectedLocations.length == 10) {
+    if (selectedLocations.length == 6) {
         document.getElementById(`location-${cctvId}`).checked = false
-        alert('Maksimal hanya dapat menampilkan 10 lokasi.')
+        alert('Maksimal hanya dapat menampilkan 6 lokasi.')
         return false;
     }
 
@@ -100,13 +101,13 @@ const selectCctv = (indexData, cctvId) => {
                         autoplay="" 
                         muted="" 
                         playsinline="" 
-                        poster="/assets/images/loading.jpg"
+                        poster="${basePath}assets/images/loading.jpg"
                         src="${dataCctv.api}"
                         type="video/fmp4">
                     </video>
                     <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
                     <div class="absolute ${refreshButton} px-1 bg-slate-800/30 text-white text-sm rounded rounded-br-lg backdrop-opacity-10 hover:cursor-pointer" onclick="refreshVideo('${cctvId}')">
-                        <img src="/assets/images/ic-refresh.png" class="w-7"/>
+                        <img src="${basePath}assets/images/ic-refresh.png" class="w-7"/>
                     </div>
                 </div>`;
 
@@ -152,11 +153,8 @@ const refreshVideo = (id) => {
 }
 
 ( async function() {
-
     fetchDataApi().then(response => {
         buildListCctv()
-        // selectCctv(49, 'cctv49')
-        // selectCctv(50, 'cctv50')
     })
 
     elementInputLocation.addEventListener('keyup', searchLocation)
@@ -177,5 +175,4 @@ const refreshVideo = (id) => {
             body.style.overflow = 'auto'
         }
     }
-    
 })();

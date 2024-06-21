@@ -47,10 +47,6 @@
         width: 50%;
     }
 
-    /* #list-cctv > li {
-        width: 500px;
-    } */
-
     #list-cctv {
         margin: auto;
     }
@@ -76,8 +72,4 @@
     .box-modal {
         width: 30%;
     }
-
-    /* #list-cctv > li {
-        width: 100%;
-    } */
 }

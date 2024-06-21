@@ -1,8 +1,0 @@
-TODO :
-- design layout ✅
-- button untuk refresh di-tiap video player nya ✅
-- scrapp data CCTV diskominfo pakai puppeter ✅
-- bikin About Project ✅
-- fitur favorit location dan simpan di localStorage
-- upload ke github.io
-- bikin supaya bisa di-install di device

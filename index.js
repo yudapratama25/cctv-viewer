@@ -2,6 +2,12 @@
 const elementListCctv  = document.getElementById('list-cctv');
 const elementContainer = document.getElementById('container');
 const elementInputLocation = document.getElementById('search-location')
+const modalInfo = document.getElementById('modal-info')
+const buttonInfo = document.getElementById('button-info')
+const buttonCloseModal = document.getElementById('button-close-modal')
+const body = document.getElementsByTagName('body')[0]
+
+let widthDevice = screen.width
 
 let apis = []
 
@@ -19,12 +25,16 @@ const buildListCctv = () => {
                 </li>`;
     });
 
-    if (listCctv.length < 15) {
-        elementListCctv.style.gridTemplateRows = 'repeat(3, auto)'
-    } else if (listCctv.length < 25) {
-        elementListCctv.style.gridTemplateRows = 'repeat(5, auto)'
+    if (widthDevice > 640) {
+        if (listCctv.length < 15) {
+            elementListCctv.style.gridTemplateRows = 'repeat(3, auto)'
+        } else if (listCctv.length < 25) {
+            elementListCctv.style.gridTemplateRows = 'repeat(5, auto)'
+        } else {
+            elementListCctv.style.gridTemplateRows = 'repeat(10, auto)'
+        }
     } else {
-        elementListCctv.style.gridTemplateRows = 'repeat(10, auto)'
+        elementListCctv.style.gridTemplateRows = 'repeat(5, auto)'
     }
 
     elementListCctv.innerHTML = html
@@ -35,10 +45,12 @@ const adjustVideoPlayerSize = () => {
 
     const videoPlayers = document.getElementsByClassName('video-player')
 
-    if (numberOfSelectedLocation == 1) {
-        elementContainer.classList.add('h-screen')
-    } else {
-        elementContainer.classList.remove('h-screen')
+    if (widthDevice > 768) {
+        if (numberOfSelectedLocation == 1) {
+            elementContainer.classList.add('h-screen')
+        } else {
+            elementContainer.classList.remove('h-screen')
+        }
     }
 
     for (let index = 0; index < videoPlayers.length; index++) {
@@ -74,7 +86,13 @@ const selectCctv = (indexData, cctvId) => {
 
     const dataCctv = listCctv[indexData];
 
-    let html = `<div id="container-video-player-${cctvId}" class="p-3 video-player relative">
+    const padding = (widthDevice < 640) ? '' : ' p-3'
+
+    const infoCctv = (widthDevice < 640) ? 'bottom-0 left-0' : 'bottom-3 left-3'
+
+    const refreshButton = (widthDevice < 640) ? 'bottom-0 right-0' : 'bottom-3 right-3'
+
+    let html = `<div id="container-video-player-${cctvId}" class="video-player relative${padding}">
                     <video
                         id="video-player-${cctvId}" 
                         class="h-full block rounded-lg" 
@@ -86,13 +104,13 @@ const selectCctv = (indexData, cctvId) => {
                         src="${dataCctv.api}"
                         type="video/fmp4">
                     </video>
-                    <span class="absolute bottom-3 left-3 px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
-                    <div class="absolute bottom-3 right-3 px-1 bg-slate-800/30 text-white text-sm rounded rounded-br-lg backdrop-opacity-10" onclick="refreshVideo('${cctvId}')">
+                    <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
+                    <div class="absolute ${refreshButton} px-1 bg-slate-800/30 text-white text-sm rounded rounded-br-lg backdrop-opacity-10 hover:cursor-pointer" onclick="refreshVideo('${cctvId}')">
                         <img src="/assets/images/ic-refresh.png" class="w-7"/>
                     </div>
                 </div>`;
 
-    elementContainer.insertAdjacentHTML('beforeend', html);
+    elementContainer.insertAdjacentHTML('afterbegin', html);
 
     selectedLocations.push(cctvId)
 
@@ -137,8 +155,27 @@ const refreshVideo = (id) => {
 
     fetchDataApi().then(response => {
         buildListCctv()
+        // selectCctv(49, 'cctv49')
+        // selectCctv(50, 'cctv50')
     })
 
     elementInputLocation.addEventListener('keyup', searchLocation)
+
+    buttonInfo.onclick = function () {
+        modalInfo.style.display = 'flex'
+        body.style.overflow = 'hidden'
+    }
+
+    buttonCloseModal.onclick = function () {
+        modalInfo.style.display = 'none'
+        body.style.overflow = 'auto'
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modalInfo) {
+            modalInfo.style.display = 'none'
+            body.style.overflow = 'auto'
+        }
+    }
     
 })();

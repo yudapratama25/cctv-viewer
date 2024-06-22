@@ -160,7 +160,7 @@ const refreshVideo = (id) => {
     elementInputLocation.addEventListener('keyup', searchLocation)
 
     buttonInfo.onclick = function () {
-        modalInfo.style.display = 'flex'
+        modalInfo.style.display = 'block'
         body.style.overflow = 'hidden'
     }
 

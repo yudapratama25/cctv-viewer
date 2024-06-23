@@ -17,6 +17,8 @@ let selectedLocations = []
 
 let isIOS = false;
 
+var isForbidden = false;
+
 const checkIOS = () => {
     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
 
@@ -111,7 +113,7 @@ const selectCctv = (indexData, cctvId) => {
                         muted="" 
                         playsinline="" 
                         poster="${basePath}assets/images/loading.jpg"
-                        src="${dataCctv.api}"
+                        src="${(isForbidden) ? dataCctv.apiSanter : dataCctv.api}"
                         type="video/fmp4">
                     </video>
                     <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
@@ -163,8 +165,6 @@ const refreshVideo = (id) => {
 
 ( async function() {
     isIOS = checkIOS()
-
-    console.log('is IOS : ', isIOS);
 
     fetchDataApi().then(response => {
         buildListCctv()

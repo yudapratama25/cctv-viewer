@@ -4,7 +4,7 @@
     {
       "location": "Bandara APT Pranoto",
       "url": "https://diskominfo.samarindakota.go.id/api/cctv/bandara-apt-pranoto",
-      "api": "https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUV8sA0KsDaHmUMrdJT7nBes0jAvMaEGN7E5qCPUIjqX9lOQqEnpkiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DMwMLSwMDW2SElOstRLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live",
+      "api": "https://vmssamarinda.iconpln.co.id:8443/mt/api/rest/v1/media?session=AYMAfP8KEOFwg8Ds1UExjWk1VvcCCekSFgoUO-MAnfpnY9ljhkeIV2t03c82XLMaEHf3ovwGc0Tav5QB8vtI9jAiEG4SCpxUgk9ivN4Jozv2qgkqEFBlbWtvdCBTYW1hcmluZGEyIRoQTZ6shHLARv-_iI3yRVfLVyoNYWRtaW5pc3RyYXRvcg&cameraId=4xIx1DMwMLSwMDW2SElOstRLTsw1MBASEE7vKs8odvBuM3dQEV72LA4A&format=fmp4&frames=all&media=video&quality=high&t=live",
       "id": "cctv0",
       "apiSanter": "https://api.santer.app/cctv/PnqiOzBlipcdJlcG_RXnX/stream"
     },

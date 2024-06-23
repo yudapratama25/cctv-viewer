@@ -1,4 +1,3 @@
-// const videoPlayer = document.getElementById('video-player');
 const elementListCctv  = document.getElementById('list-cctv');
 const elementContainer = document.getElementById('container');
 const elementInputLocation = document.getElementById('search-location')
@@ -15,6 +14,14 @@ let apis = []
 let listCctv = []
 
 let selectedLocations = []
+
+let isIOS = false;
+
+const checkIOS = () => {
+    if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
+};
 
 const buildListCctv = () => {
     let html = ``;
@@ -93,10 +100,12 @@ const selectCctv = (indexData, cctvId) => {
 
     const refreshButton = (widthDevice < 640) ? 'bottom-0 right-0' : 'bottom-3 right-3'
 
+    const fullHeight = (!isIOS) ? ' h-full' : ''
+
     let html = `<div id="container-video-player-${cctvId}" class="video-player relative${padding}">
                     <video
                         id="video-player-${cctvId}" 
-                        class="h-full block rounded-lg" 
+                        class="block rounded-lg${fullHeight}" 
                         name="media" 
                         autoplay="" 
                         muted="" 
@@ -124,7 +133,7 @@ const fetchDataApi = async () => {
     await fetch('./cctvSamarinda.json')
             .then(response => response.json())
             .then(data => {
-                apis = data.apis
+                apis = data.apis.filter(item => item.api !== '')
                 listCctv = apis
             })
             .catch(error => console.log(error))
@@ -153,6 +162,10 @@ const refreshVideo = (id) => {
 }
 
 ( async function() {
+    isIOS = checkIOS()
+
+    console.log('is IOS : ', isIOS);
+
     fetchDataApi().then(response => {
         buildListCctv()
     })

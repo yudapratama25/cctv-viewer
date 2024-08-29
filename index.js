@@ -113,7 +113,7 @@ const selectCctv = (indexData, cctvId) => {
                         muted="" 
                         playsinline="" 
                         poster="${basePath}assets/images/loading.jpg"
-                        src="${(isForbidden) ? dataCctv.apiSanter : dataCctv.src}"
+                        src="${(isForbidden) ? dataCctv.apiSanter : dataCctv.api}"
                         type="video/fmp4">
                     </video>
                     <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
@@ -132,7 +132,7 @@ const selectCctv = (indexData, cctvId) => {
 }
 
 const fetchDataApi = async () => {
-    await fetch('https://scraping-rest.vercel.app/assets/cctv-smr.json')
+    await fetch('./cctvSamarinda.json')
             .then(response => response.json())
             .then(data => {
                 apis = data.apis.filter(item => item.src !== '')

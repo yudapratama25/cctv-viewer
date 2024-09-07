@@ -15,7 +15,7 @@
     grid-auto-flow: column;
 }
 
-#search-location {
+#search-location-container {
     width: 100%;
 }
 
@@ -29,7 +29,7 @@
 }
 
 @media screen and (min-width: 640px) {
-    #search-location {
+    #search-location-container {
         width: 80%;
     }
 
@@ -43,7 +43,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    #search-location {
+    #search-location-container {
         width: 50%;
     }
 
@@ -65,7 +65,7 @@
         height: 45vh;
     }
 
-    #search-location {
+    #search-location-container {
         width: 30%;
     }
 

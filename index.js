@@ -1,6 +1,7 @@
 const elementListCctv  = document.getElementById('list-cctv');
 const elementContainer = document.getElementById('container');
 const elementInputLocation = document.getElementById('search-location')
+const elementCountLocation = document.getElementById('count-location')
 const modalInfo = document.getElementById('modal-info')
 const buttonInfo = document.getElementById('button-info')
 const buttonCloseModal = document.getElementById('button-close-modal')
@@ -25,13 +26,29 @@ const checkIOS = () => {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
 };
 
+const buildShortName = (locationName) => {
+    let newLocationName = locationName.toLowerCase();
+
+    if (newLocationName.includes("cctv")) {
+        newLocationName = newLocationName.replace('cctv', '');
+    }
+
+    if (newLocationName.includes("simpang")) {
+        newLocationName = newLocationName.replace('simpang', 'simp.');
+    }
+
+    return newLocationName.trim().toUpperCase();
+}
+
 const buildListCctv = () => {
     let html = ``;
 
+    elementCountLocation.innerText = listCctv.length;
+
     listCctv.map((data, index) => {
-        html += `<li class="px-2 py-1 text-sm rounded-lg shadow">
+        html += `<li class="px-2 py-1 text-sm rounded-lg shadow inline-flex items-center justify-items-center">
                     <input type="checkbox" id="location-${data.id}" class="me-1" onchange="selectCctv(${index},'${data.id}')"${selectedLocations.includes(data.id.toString()) ? ' checked' : ''}/>
-                    <label for="location-${data.id}" class="text-white">${data.location}</label>
+                    <label for="location-${data.id}" class="text-white overflow-hidden text-nowrap text-ellipsis" title="${data.location}">${buildShortName(data.location)}</label>
                 </li>`;
     });
 
@@ -76,15 +93,9 @@ const adjustVideoPlayerSize = () => {
 
 const selectCctv = (indexData, cctvId) => {
 
-    if (selectedLocations.includes(cctvId)) { // unselect location
-        selectedLocations = selectedLocations.filter((id) => id !== cctvId)
+    const isSelected = unselectCctv(cctvId);
 
-        document.getElementById(`container-video-player-${cctvId}`).remove();
-
-        setTimeout(() => {
-            adjustVideoPlayerSize()
-        }, 600);
-
+    if (isSelected) {
         return false;
     }
 
@@ -96,13 +107,15 @@ const selectCctv = (indexData, cctvId) => {
 
     const dataCctv = listCctv[indexData];
 
-    const padding = (widthDevice < 640) ? '' : ' p-3'
+    const padding = (widthDevice < 640) ? '' : ' p-3';
 
     const infoCctv = (widthDevice < 640) ? 'bottom-0 left-0' : 'bottom-3 left-3'
 
-    const refreshButton = (widthDevice < 640) ? 'bottom-0 right-0' : 'bottom-3 right-3'
+    const refreshButton = (widthDevice < 640) ? 'bottom-0 right-0' : 'bottom-3 right-3';
 
-    const fullHeight = (!isIOS) ? ' h-full' : ''
+    const deleteButton = (widthDevice < 640) ? 'bottom-12 right-0' : 'bottom-12 right-3';
+
+    const fullHeight = (!isIOS) ? ' h-full' : '';
 
     let html = `<div id="container-video-player-${cctvId}" class="video-player relative${padding}">
                     <video
@@ -113,22 +126,43 @@ const selectCctv = (indexData, cctvId) => {
                         muted="" 
                         playsinline="" 
                         poster="${basePath}assets/images/loading.jpg"
-                        src="${(isForbidden) ? dataCctv.apiSanter : dataCctv.api}"
+                        src="${dataCctv.source}"
                         type="video/fmp4">
                     </video>
-                    <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded rounded-bl-lg">${dataCctv.location}</span>
-                    <div class="absolute ${refreshButton} px-1 bg-slate-800/30 text-white text-sm rounded rounded-br-lg backdrop-opacity-10 hover:cursor-pointer" onclick="refreshVideo('${cctvId}')">
+                    <span class="absolute ${infoCctv} px-1 bg-slate-800 text-white text-sm rounded-tr rounded-bl-lg">${buildShortName(dataCctv.location)}</span>
+                    <div class="absolute ${refreshButton} px-1 bg-slate-800/30 text-white text-sm rounded-tl rounded-br-lg rounded-tr-none backdrop-opacity-10 hover:cursor-pointer hover:bg-slate-400/30" onclick="refreshVideo('${cctvId}')">
                         <img src="${basePath}assets/images/ic-refresh.png" class="w-7"/>
+                    </div>
+                    <div class="absolute ${deleteButton} px-2 py-1 bg-slate-800/30 text-white text-sm rounded-s backdrop-opacity-10 hover:cursor-pointer hover:bg-slate-400/30" onclick="unselectCctv('${cctvId}')">
+                        <img src="${basePath}assets/images/ic-delete.png" class="w-5"/>
                     </div>
                 </div>`;
 
     elementContainer.insertAdjacentHTML('afterbegin', html);
 
-    selectedLocations.push(cctvId)
+    selectedLocations.push(cctvId);
 
     setTimeout(() => {
         adjustVideoPlayerSize()
     }, 600);
+}
+
+const unselectCctv = (cctvId) => {
+    if (selectedLocations.includes(cctvId)) { // unselect location
+        selectedLocations = selectedLocations.filter((id) => id !== cctvId);
+
+        document.getElementById(`container-video-player-${cctvId}`).remove();
+
+        document.getElementById(`location-${cctvId}`).checked = false;
+
+        setTimeout(() => {
+            adjustVideoPlayerSize()
+        }, 600);
+
+        return true;
+    }
+
+    return false;
 }
 
 const fetchDataApi = async () => {

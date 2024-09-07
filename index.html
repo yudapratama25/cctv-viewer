@@ -49,7 +49,12 @@
 
     <div class="m-3 bg-slate-800 rounded-lg p-3">
         <div class="block mb-3">
-            <input id="search-location" type="text" class="px-3 py-2 mx-auto block rounded outline-none ring-1 ring-slate-500" placeholder="Cari lokasi">
+            <label id="search-location-container" class="relative block mx-auto">
+                <input id="search-location" class="w-full uppercase placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-2 pr-12 shadow-sm focus:outline-none sm:text-sm" placeholder="Cari lokasi" type="text"/>
+                <span id="count-location" class="absolute flex text-white top-0 right-0 items-center px-2 h-full bg-slate-500 rounded-r ring-inset outline-none flex justify-center w-[40px]">
+                    0
+                </span>
+            </label>
         </div>
         <div class="w-full overflow-x-auto">
             <ul id="list-cctv" class="list-none"></ul>

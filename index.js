@@ -215,10 +215,14 @@ const refreshVideo = (id) => {
 
 const saveVisitor = () => {
     if (window.location.hostname === 'yudapratama25.github.io') {
-        fetch(`https://aduy-be.vercel.app/api/cctv-viewer/visitor`, { method: 'POST' })
-            .then(response => response.json())
-            .then(data => null)
-            .catch(error => null);
+        fetch("https://api.ipify.org/?format=json")
+            .then((response) => response.json())
+            .then(async function (data) {
+                fetch(`https://aduy-be.vercel.app/api/cctv-viewer/visitor`,{ method: 'POST', body: JSON.stringify({ip:data.ip})})
+                    .then(response => response.json())
+                    .then(data => null)
+                    .catch(error => null);
+            }).catch(err => null);
     }
 }
 

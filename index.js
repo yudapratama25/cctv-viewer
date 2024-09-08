@@ -46,10 +46,10 @@ const buildListCctv = () => {
     elementCountLocation.innerText = listCctv.length;
 
     listCctv.map((data, index) => {
-        html += `<li class="px-2 py-1 text-sm rounded-lg shadow inline-flex items-center justify-items-center">
-                    <input type="checkbox" id="location-${data.id}" class="me-1" onchange="selectCctv(${index},'${data.id}')"${selectedLocations.includes(data.id.toString()) ? ' checked' : ''}/>
-                    <label for="location-${data.id}" class="text-white overflow-hidden text-nowrap text-ellipsis" title="${data.location}">${buildShortName(data.location)}</label>
-                </li>`;
+        html += `<li class="px-2 py-1 text-sm rounded-lg shadow inline-flex items-center justify-items-center">`
+                    +`<input type="checkbox" id="location-${data.id}" class="me-1" onchange="selectCctv(${index},'${data.id}')"${selectedLocations.includes(data.id.toString()) ? ' checked' : ''}/>`
+                    +`<label for="location-${data.id}" class="text-white overflow-hidden text-nowrap text-ellipsis" title="${data.location}">${buildShortName(data.location)}</label>`
+                +`</li>`;
     });
 
     if (widthDevice > 640) {

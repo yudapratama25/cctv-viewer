@@ -213,7 +213,16 @@ const refreshVideo = (id) => {
     }, 500);
 }
 
-( async function() {
+const saveVisitor = () => {
+    if (window.location.hostname === 'yudapratama25.github.io') {
+        fetch(`https://aduy-be.vercel.app/api/cctv-viewer/visitor`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => null)
+            .catch(error => null);
+    }
+}
+
+(async function() {
     isIOS = checkIOS()
 
     fetchDataApi().then(response => {
@@ -238,4 +247,6 @@ const refreshVideo = (id) => {
             body.style.overflow = 'auto'
         }
     }
+    
+    saveVisitor();
 })();

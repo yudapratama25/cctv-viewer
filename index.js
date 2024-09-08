@@ -175,7 +175,7 @@ const fetchDataApi = async () => {
     await fetch('./cctvSamarinda.json')
             .then(response => response.json())
             .then(data => {
-                apis = data.apis.filter(item => item.src !== '')
+                apis = data.apis.filter(item => item.source !== '')
                 listCctv = apis
             })
             .catch(error => console.log(error))

@@ -214,11 +214,20 @@ const refreshVideo = (id) => {
 }
 
 const saveVisitor = () => {
-    if (window.location.hostname === 'yudapratama25.github.io') {
+    const isLocal = false;
+    if (window.location.hostname === 'yudapratama25.github.io' || isLocal) {
         fetch("https://api.ipify.org/?format=json")
             .then((response) => response.json())
             .then(async function (data) {
-                fetch(`https://aduy-be.vercel.app/api/cctv-viewer/visitor`,{ method: 'POST', body: JSON.stringify({ip:data.ip})})
+                const api = (isLocal) ? 'http://localhost:3001/api/cctv-viewer/visitor' : 'https://aduy-be.vercel.app/api/cctv-viewer/visitor';
+                const options = {
+                    method: 'POST',
+                    body: JSON.stringify({ip:data.ip}),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                };
+                fetch(api, options)
                     .then(response => response.json())
                     .then(data => null)
                     .catch(error => null);

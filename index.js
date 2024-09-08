@@ -151,6 +151,12 @@ const unselectCctv = (cctvId) => {
     if (selectedLocations.includes(cctvId)) { // unselect location
         selectedLocations = selectedLocations.filter((id) => id !== cctvId);
 
+        let videoElement = document.getElementById(`video-player-${cctvId}`);
+        videoElement.pause();
+        videoElement.removeAttribute('src');
+        videoElement.load();
+        videoElement.remove();
+
         document.getElementById(`container-video-player-${cctvId}`).remove();
 
         document.getElementById(`location-${cctvId}`).checked = false;
@@ -175,9 +181,19 @@ const fetchDataApi = async () => {
             .catch(error => console.log(error))
 }
 
+const debounce = (func, delay) => {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    }
+}
+
 const searchLocation = (e) => {
     let keyword = e.target.value.toLowerCase().trim()
-
+    
     if (keyword === '') {
         listCctv = apis
     } else {
@@ -202,9 +218,9 @@ const refreshVideo = (id) => {
 
     fetchDataApi().then(response => {
         buildListCctv()
-    })
+    });
 
-    elementInputLocation.addEventListener('keyup', searchLocation)
+    elementInputLocation.addEventListener('keyup', debounce(searchLocation, 300));
 
     buttonInfo.onclick = function () {
         modalInfo.style.display = 'block'

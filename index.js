@@ -213,18 +213,25 @@ const refreshVideo = (id) => {
     }, 500);
 }
 
-const saveVisitor = () => {
+const saveVisitor = async () => {
     const isLocal = false;
     if (window.location.hostname === 'yudapratama25.github.io' || isLocal) {
-        const api = (isLocal) ? 'http://localhost:3001/api/cctv-viewer/visitor' : 'https://aduy-be.vercel.app/api/cctv-viewer/visitor';
-        const options = {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        };
-        fetch(api, options)
-        .then(response => response.json())
+        const getIp = await fetch('https://api.ipify.org?format=json');
+
+        if (getIp.ok) {
+            const dataIp = await getIp.json();
+            const api = (isLocal) ? 'http://localhost:3001/api/cctv-viewer/visitor' : 'https://aduy-be.vercel.app/api/cctv-viewer/visitor';
+            const options = {
+                method: 'POST',
+                body: JSON.stringify({ip: dataIp.ip}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+
+            fetch(api, options)
+            .then(response => response.json())
+        }
     }
 }
 
@@ -254,5 +261,7 @@ const saveVisitor = () => {
         }
     }
     
-    saveVisitor();
+    setTimeout(() => {
+        saveVisitor();
+    }, 2300);
 })();
